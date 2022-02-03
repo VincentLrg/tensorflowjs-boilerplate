@@ -41,6 +41,7 @@ const getPredictions = async () => {
 
 onMounted(async () => {
   await tf.ready()
+  // Call getPredictions here
 })
 </script>
 
