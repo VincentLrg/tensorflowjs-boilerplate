@@ -14,12 +14,6 @@ import * as tfjsWebGL from '@tensorflow/tfjs-backend-webgl'
 tfjsWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`
 )
-tfjsCpu.setCpuPaths(
-  `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsCpu.version_cpu}/dist/`
-)
-tfjsWebGL.setCpuPaths(
-  `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWebGL.version_webgl}/dist/`
-)
 
 import { onMounted, ref } from '@vue/runtime-core'
 
@@ -31,6 +25,7 @@ const matrix = ref([])
 const getPredictions = async () => {
   //const returnTensor = false
   //const predictions = await model.predict(matrix, returnTensor)
+  const predictions = []
 
   //If predictions isn't null, do something
   if (predictions.length > 0) {
@@ -42,6 +37,7 @@ const getPredictions = async () => {
 onMounted(async () => {
   await tf.ready()
   // Call getPredictions here
+  getPredictions()
 })
 </script>
 
