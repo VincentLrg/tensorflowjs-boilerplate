@@ -10,6 +10,7 @@ import * as tf from '@tensorflow/tfjs'
 import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm'
 import * as tfjsCpu from '@tensorflow/tfjs-backend-cpu'
 import * as tfjsWebGL from '@tensorflow/tfjs-backend-webgl'
+import toBee from './assets/tobee.png'
 
 tfjsWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`
@@ -23,20 +24,27 @@ const model = ref()
 const matrix = ref([])
 
 const getPredictions = async () => {
-  //const returnTensor = false
-  //const predictions = await model.predict(matrix, returnTensor)
-  const predictions = []
+  const example = tf.randomNormal([1, 100])
+  // const example = tf.tensor([1,100], [1, 100])
+  // console.log(example);
+
+  const returnTensor = false
+  const predictions = await model.value.predict(example, returnTensor)
+
+  console.log(predictions);
 
   //If predictions isn't null, do something
-  if (predictions.length > 0) {
-    //Do something for each predictions in the array
-    for (let i = 0; i < predictions.length; i++) {}
-  }
+  // if (predictions.length > 0) {
+  //   //Do something for each predictions in the array
+  //   for (let i = 0; i < predictions.length; i++) {
+  //     console.log(predictions[i]);
+  //   }
+  // }
 }
 
 onMounted(async () => {
   await tf.ready()
-  // Call getPredictions here
+  model.value = await tf.loadLayersModel('/models/dcgan_MNIST/model.json');
   getPredictions()
 })
 </script>
